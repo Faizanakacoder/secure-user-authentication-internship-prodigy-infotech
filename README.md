@@ -102,7 +102,7 @@ This project allows users to **sign up, log in, and access protected routes** (D
 )
 
 ### 🔹 Dashboard with Logout
-![Logout Screenshot](<img width="1856" height="900" alt="image" src="https://github.com/user-attachments/assets/f5764930-5b1d-4d08-88b0-fc3fcfd70228" />
+![Logout Screenshot]([DASHBOARD & LOGOUT.png](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/03088a6e84c13997ca3a97bebf61c4de70ca3807/DASHBOARD%20%26%20LOGOUT.png)
 )
 
 > 📌 Place all screenshots inside a folder named **`/screenshots`** in your repo.  
