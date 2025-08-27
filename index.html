@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth Demo – HTML/CSS/JS (Hashing + Sessions + RBAC)</title>
+  <style>
+    :root{
+      --bg: #0f172a;        /* slate-900 */
+      --panel:#0b1226;      /* deeper slate */
+      --muted:#94a3b8;      /* slate-400 */
+      --text:#e5e7eb;       /* zinc-200 */
+      --brand:#7c3aed;      /* violet-600 */
+      --brand-2:#22d3ee;    /* cyan-400 */
+      --ok:#22c55e;         /* green-500 */
+      --warn:#f59e0b;       /* amber-500 */
+      --err:#ef4444;        /* red-500 */
+      --card:#111827ee;     /* overlay */
+      --border:#1f2937;     /* slate-800 */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background: radial-gradient(1200px 800px at 10% -10%, #1e293b55, transparent),
+               radial-gradient(900px 600px at 110% 10%, #0ea5e955, transparent),
+               var(--bg);
+      color:var(--text); font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    header{
+      position:sticky; top:0; backdrop-filter: blur(10px); background: #0b1226cc; border-bottom:1px solid var(--border);
+      z-index:10;
+    }
+    .nav{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:14px 18px}
+    .logo{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.4px}
+    .logo-mark{width:26px; height:26px; border-radius:8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow)}
+    .nav a{color:var(--text); text-decoration:none; padding:8px 12px; border-radius:12px; border:1px solid transparent}
+    .nav a:hover{background:#101a33; border-color:var(--border)}
+    .nav .btn{background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:white; font-weight:600}
+    .nav .btn:hover{filter:brightness(1.05)}
+
+    main{max-width:1100px; margin:40px auto; padding:0 18px}
+    .grid{display:grid; grid-template-columns:1.1fr .9fr; gap:22px}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .card h2{margin:0 0 6px}
+    .card .sub{color:var(--muted); margin:0 0 16px}
+    .card .inner{padding:22px}
+
+    form{display:grid; gap:12px}
+    label{font-size:.94rem; color:#cbd5e1}
+    input, select{
+      width:100%; padding:12px 14px; background:#0a1225; border:1px solid var(--border); color:var(--text);
+      border-radius:12px; outline:none; transition:border .2s, background .2s
+    }
+    input:focus, select:focus{border-color:#334155; background:#0b152e}
+
+    .row{display:flex; gap:12px}
+    .row > *{flex:1}
+
+    .help{font-size:.86rem; color:var(--muted)}
+    .muted{color:var(--muted)}
+
+    .actions{display:flex; gap:10px; align-items:center}
+    .btn{cursor:pointer; padding:12px 16px; border-radius:12px; border:1px solid transparent; font-weight:600}
+    .btn.primary{background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:white}
+    .btn.ghost{background:transparent; border-color:var(--border); color:var(--text)}
+    .btn.warn{background:transparent; border-color:var(--warn); color:var(--warn)}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0d1731}
+
+    .notice{padding:12px 14px; border-radius:12px; background:#10213c; border:1px solid #1f2b46; font-size:.95rem}
+    .notice.ok{background:#0f2f24; border-color:#154f3a}
+    .notice.err{background:#3b1215; border-color:#5f1a1e}
+
+    .spacer{height:8px}
+
+    footer{margin:40px auto; max-width:1100px; padding:0 18px 40px; color:#9aa3b2; font-size:.9rem}
+
+    .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo"><span class="logo-mark"></span> <span>Auth Demo</span></div>
+      <nav id="nav-links">
+        <a href="#login" data-when="logged-out">Login</a>
+        <a href="#register" data-when="logged-out" class="btn">Register</a>
+        <a href="#dashboard" data-when="logged-in">Dashboard</a>
+        <a href="#admin" data-when="logged-in">Admin</a>
+        <a href="#" id="logoutBtn" data-when="logged-in">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section class="card">
+        <div class="inner">
+          <h2>Welcome</h2>
+          <p class="sub">This is a front‑end only demonstration of user authentication with password hashing, session management, and role‑based access control (RBAC).</p>
+          <div class="pill" id="session-pill">
+            <span>Session:</span>
+            <strong id="session-status">Not signed in</strong>
+          </div>
+          <div class="spacer"></div>
+          <div class="notice">
+            ⚠️ For learning/demo only. Real apps need a backend (HTTPS, server‑side sessions/JWTs, database, CSRF protection, rate limiting, etc.).
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="inner">
+          <h2>Quick Actions</h2>
+          <p class="sub">Jump into a flow:</p>
+          <div class="actions">
+            <a class="btn primary" href="#register">New Account</a>
+            <a class="btn ghost" href="#login">Sign In</a>
+            <button class="btn warn" id="wipeData">Wipe Demo Data</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REGISTER -->
+    <section id="view-register" class="card hidden">
+      <div class="inner">
+        <h2>Create an account</h2>
+        <p class="sub">Passwords are hashed in‑browser using PBKDF2 with a unique salt. Users are persisted in localStorage.</p>
+        <form id="registerForm">
+          <div class="row">
+            <div>
+              <label>Username</label>
+              <input id="reg-username" required minlength="3" maxlength="24" placeholder="e.g. faiz_u" />
+            </div>
+            <div>
+              <label>Email</label>
+              <input id="reg-email" type="email" required placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Password</label>
+              <input id="reg-password" type="password" required minlength="8" placeholder="At least 8 characters" />
+              <div class="help">Use 12+ chars with upper/lower, number, symbol.</div>
+            </div>
+            <div>
+              <label>Confirm Password</label>
+              <input id="reg-confirm" type="password" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Role</label>
+              <select id="reg-role">
+                <option value="user" selected>User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div>
+              <label>Iterations (PBKDF2)</label>
+              <input id="reg-iters" type="number" min="60000" max="600000" step="1000" value="120000" />
+            </div>
+          </div>
+          <div id="reg-msg" class="notice hidden"></div>
+          <div class="actions">
+            <button type="submit" class="btn primary">Register</button>
+            <a class="btn ghost" href="#login">Have an account? Login</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="view-login" class="card hidden">
+      <div class="inner">
+        <h2>Sign in</h2>
+        <p class="sub">Verify password by re‑deriving the PBKDF2 hash and comparing to the stored value.</p>
+        <form id="loginForm">
+          <label>Username</label>
+          <input id="login-username" required />
+          <label>Password</label>
+          <input id="login-password" type="password" required />
+          <div id="login-msg" class="notice hidden"></div>
+          <div class="actions">
+            <button type="submit" class="btn primary">Login</button>
+            <a class="btn ghost" href="#register">Create account</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- DASHBOARD (Protected) -->
+    <section id="view-dashboard" class="card hidden">
+      <div class="inner">
+        <h2>Dashboard (Protected)</h2>
+        <p class="sub">Only accessible when authenticated.</p>
+        <div class="pill"><span>Logged in as</span> <strong id="whoami">—</strong></div>
+        <div class="spacer"></div>
+        <div class="notice ok">Welcome to the protected area. 🎉</div>
+      </div>
+    </section>
+
+    <!-- ADMIN (Role-protected) -->
+    <section id="view-admin" class="card hidden">
+      <div class="inner">
+        <h2>Admin Panel (RBAC)</h2>
+        <p class="sub">Requires <code>admin</code> role.</p>
+        <div class="notice ok" id="adminGate">You have admin access.</div>
+        <div class="spacer"></div>
+        <div id="userList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Built with the Web Crypto API (PBKDF2 + SHA‑256), localStorage for users, and a simple session token for auth. Single‑file demo for learning.
+  </footer>
+
+  <script>
+    // ===== Utility: base64 helpers =====
+    const enc = new TextEncoder();
+    const dec = new TextDecoder();
+    const b64 = {
+      fromBytes: (arr) => btoa(String.fromCharCode(...new Uint8Array(arr))),
+      toBytes: (str) => Uint8Array.from(atob(str), c => c.charCodeAt(0))
+    };
+
+    // ===== Storage Keys =====
+    const USERS_KEY = 'authdemo_users_v1';
+    const SESSION_KEY = 'authdemo_session_v1';
+
+    // ===== Crypto: PBKDF2 derive =====
+    async function deriveHash(password, saltB64, iterations){
+      const salt = b64.toBytes(saltB64);
+      const keyMaterial = await crypto.subtle.importKey(
+        'raw', enc.encode(password), {name:'PBKDF2'}, false, ['deriveBits']
+      );
+      const bits = await crypto.subtle.deriveBits({
+        name:'PBKDF2', hash:'SHA-256', salt, iterations: Number(iterations)||120000
+      }, keyMaterial, 256);
+      return b64.fromBytes(bits);
+    }
+
+    function randomBytesB64(len=32){
+      const b = new Uint8Array(len); crypto.getRandomValues(b); return b64.fromBytes(b);
+    }
+
+    // ===== Users repo =====
+    function loadUsers(){
+      return JSON.parse(localStorage.getItem(USERS_KEY) || '{}');
+    }
+    function saveUsers(obj){
+      localStorage.setItem(USERS_KEY, JSON.stringify(obj));
+    }
+
+    // ===== Session =====
+    function setSession(sess){
+      localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
+      renderSession();
+    }
+    function getSession(){
+      const s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+      if(!s) return null;
+      if(Date.now() > s.expiresAt){
+        localStorage.removeItem(SESSION_KEY); return null;
+      }
+      return s;
+    }
+    function clearSession(){
+      localStorage.removeItem(SESSION_KEY); renderSession();
+    }
+
+    // ===== Auth Guards =====
+    function isAuthed(){ return !!getSession(); }
+    function getCurrentUser(){
+      const s = getSession(); if(!s) return null; const users = loadUsers(); return users[s.username] || null;
+    }
+    function requireAuth(){
+      if(!isAuthed()){ location.hash = '#login'; return false; }
+      return true;
+    }
+    function requireRole(role){
+      if(!requireAuth()) return false;
+      const sess = getSession(); if(!sess) return false;
+      if(sess.role !== role){
+        alert('Access denied: requires role ' + role);
+        location.hash = '#dashboard';
+        return false;
+      }
+      return true;
+    }
+
+    // ===== UI Routing =====
+    const views = {
+      '#register':'view-register',
+      '#login':'view-login',
+      '#dashboard':'view-dashboard',
+      '#admin':'view-admin'
+    };
+    function showView(hash){
+      // hide all
+      Object.values(views).forEach(id => document.getElementById(id).classList.add('hidden'));
+
+      switch(hash){
+        case '#register':
+          document.getElementById('view-register').classList.remove('hidden');
+          break;
+        case '#login':
+          document.getElementById('view-login').classList.remove('hidden');
+          break;
+        case '#dashboard':
+          if(requireAuth()){
+            document.getElementById('view-dashboard').classList.remove('hidden');
+            const sess = getSession();
+            document.getElementById('whoami').textContent = `${sess.username} (${sess.role})`;
+          }
+          break;
+        case '#admin':
+          if(requireRole('admin')){
+            document.getElementById('view-admin').classList.remove('hidden');
+            renderUsers();
+          }
+          break;
+        default:
+          // default route based on auth
+          location.hash = isAuthed()? '#dashboard' : '#login';
+      }
+      renderNav();
+    }
+
+    function renderNav(){
+      const logged = isAuthed();
+      document.querySelectorAll('[data-when="logged-in"]').forEach(el=>{
+        el.classList.toggle('hidden', !logged);
+      });
+      document.querySelectorAll('[data-when="logged-out"]').forEach(el=>{
+        el.classList.toggle('hidden', logged);
+      });
+    }
+
+    function renderSession(){
+      const sess = getSession();
+      const el = document.getElementById('session-status');
+      if(sess){
+        const mins = Math.max(0, Math.floor((sess.expiresAt - Date.now())/60000));
+        el.textContent = `Signed in as ${sess.username} (${sess.role}) • ${mins}m left`;
+      } else {
+        el.textContent = 'Not signed in';
+      }
+      renderNav();
+    }
+
+    // ===== Register Flow =====
+    document.getElementById('registerForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const username = document.getElementById('reg-username').value.trim();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const pw = document.getElementById('reg-password').value;
+      const pw2 = document.getElementById('reg-confirm').value;
+      const role = document.getElementById('reg-role').value;
+      const iterations = Number(document.getElementById('reg-iters').value || 120000);
+      const msg = document.getElementById('reg-msg');
+
+      function fail(text){ msg.className='notice err'; msg.textContent=text; msg.classList.remove('hidden'); }
+      function ok(text){ msg.className='notice ok'; msg.textContent=text; msg.classList.remove('hidden'); }
+
+      if(pw !== pw2) return fail('Passwords do not match.');
+      if(pw.length < 8) return fail('Password must be at least 8 characters.');
+      const users = loadUsers();
+      if(users[username]) return fail('Username already exists.');
+
+      const salt = randomBytesB64(16);
+      const hash = await deriveHash(pw, salt, iterations);
+
+      users[username] = {
+        username, email, role, salt, hash, iterations, createdAt: Date.now()
+      };
+      saveUsers(users);
+      ok('Account created. You can now sign in.');
+      (e.target).reset();
+      setTimeout(()=>location.hash = '#login', 600);
+    });
+
+    // ===== Login Flow =====
+    document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.trim();
+      const pw = document.getElementById('login-password').value;
+      const msg = document.getElementById('login-msg');
+      function fail(text){ msg.className='notice err'; msg.textContent=text; msg.classList.remove('hidden'); }
+
+      const users = loadUsers();
+      const user = users[username];
+      if(!user) return fail('Invalid credentials.');
+      const hash = await deriveHash(pw, user.salt, user.iterations);
+      if(hash !== user.hash) return fail('Invalid credentials.');
+
+      // issue session
+      const token = randomBytesB64(32);
+      const ttlMinutes = 60; // 1 hour session
+      const sess = {
+        token, username, role: user.role, issuedAt: Date.now(), expiresAt: Date.now() + ttlMinutes*60*1000
+      };
+      setSession(sess);
+      location.hash = '#dashboard';
+    });
+
+    // ===== Admin render users =====
+    function renderUsers(){
+      const wrap = document.getElementById('userList');
+      const users = loadUsers();
+      const entries = Object.values(users);
+      if(entries.length === 0){ wrap.innerHTML = '<div class="notice">No users registered yet.</div>'; return; }
+      const rows = entries.map(u=>{
+        const created = new Date(u.createdAt).toLocaleString();
+        return `<tr><td>${u.username}</td><td>${u.email}</td><td>${u.role}</td><td>${created}</td></tr>`;
+      }).join('');
+      wrap.innerHTML = `
+        <div class="sub">Registered users (stored in localStorage):</div>
+        <div style="overflow:auto; border:1px solid var(--border); border-radius:12px">
+          <table style="width:100%; border-collapse:collapse; min-width:520px">
+            <thead>
+              <tr style="background:#0b152e">
+                <th style="text-align:left; padding:10px 12px; border-bottom:1px solid var(--border)">Username</th>
+                <th style="text-align:left; padding:10px 12px; border-bottom:1px solid var(--border)">Email</th>
+                <th style="text-align:left; padding:10px 12px; border-bottom:1px solid var(--border)">Role</th>
+                <th style="text-align:left; padding:10px 12px; border-bottom:1px solid var(--border)">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    // ===== Logout & Wipe =====
+    document.getElementById('logoutBtn').addEventListener('click', (e)=>{
+      e.preventDefault(); clearSession(); location.hash = '#login';
+    });
+    document.getElementById('wipeData').addEventListener('click', ()=>{
+      if(confirm('Wipe all demo data (users + session)?')){
+        localStorage.removeItem(USERS_KEY);
+        localStorage.removeItem(SESSION_KEY);
+        renderSession();
+        alert('Demo data cleared.');
+      }
+    });
+
+    // ===== Init =====
+    window.addEventListener('hashchange', ()=> showView(location.hash));
+    renderSession();
+    showView(location.hash || (isAuthed()? '#dashboard' : '#login'));
+  </script>
+</body>
+</html>
