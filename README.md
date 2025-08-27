@@ -88,27 +88,22 @@ This project allows users to **sign up, log in, and access protected routes** (D
 
 ## 🎨 Screenshots
 
-### 🔹 Homepage (Sign Up / Login)
-![Homepage Screenshot](<img width="1851" height="895" alt="image" src="https://github.com/user-attachments/assets/7829c456-64c0-4193-bc5f-b1031dd160f7" />
-)
+### 🔹 Homepage:
+![Login Screenshot](<img width="1851" height="895" alt="HOME PAGE" src="https://github.com/user-attachments/assets/917bef47-21c4-417f-b721-79fdc02884f8" />)
 
-### 🔹 Successful Sign-up
-![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />
 
-)
+### 🔹 Successful Sign-up:
+![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
 
-### 🔹 Successful Sign-up
-![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />
 
-)
+### 🔹 Successful Log-In:
+![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
 
-### 🔹 Logout Feature
-![Logout Screenshot](<img width="1856" height="900" alt="image" src="https://github.com/user-attachments/assets/f5764930-5b1d-4d08-88b0-fc3fcfd70228" />
-)
 
-### 🔹 Dashboard with Logout
-![Logout Screenshot]([DASHBOARD & LOGOUT.png](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/03088a6e84c13997ca3a97bebf61c4de70ca3807/DASHBOARD%20%26%20LOGOUT.png)
-)
+### 🔹 Dashboard & Log-out:
+![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
+
+
 
 > 📌 Place all screenshots inside a folder named **`/screenshots`** in your repo.  
 > Example path: `auth-project/screenshots/homepage.png`
