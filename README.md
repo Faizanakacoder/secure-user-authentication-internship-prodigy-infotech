@@ -89,19 +89,19 @@ This project allows users to **sign up, log in, and access protected routes** (D
 ## 🎨 Screenshots
 
 HOMEPAGE: ![Gameplay Example](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/HOME%20PAGE.png)
-
+<BR>
 
 SUCCESFUL SIGN-UP: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
-
+<BR>
 
 LOG-IN FAILED: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/LOGIN%20FAILED.png)
-
+<BR>
 
 SUCCESFUL LOGIN: ![Win Detection](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/SUCCESFUL%20LOGIN.png)
-
+<BR>
 
 DASHBOARD: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
-
+<BR>
 
 
 
