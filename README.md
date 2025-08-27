@@ -87,10 +87,17 @@ This project allows users to **sign up, log in, and access protected routes** (D
 ---
 
 ## 🎨 Screenshots
-dashboard ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
-homepage ![Gameplay Example](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/HOME%20PAGE.png)
-login failed ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/LOGIN%20FAILED.png)
-succesful login ![Win Detection](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/SUCCESFUL%20LOGIN.png)
+
+HOMEPAGE: ![Gameplay Example](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/HOME%20PAGE.png)
+
+SUCCESFUL SIGN-UP: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
+
+LOG-IN FAILED: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/LOGIN%20FAILED.png)
+
+SUCCESFUL LOGIN: ![Win Detection](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/SUCCESFUL%20LOGIN.png)
+
+DASHBOARD: ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
+
 
 
 
