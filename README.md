@@ -87,9 +87,10 @@ This project allows users to **sign up, log in, and access protected routes** (D
 ---
 
 ## 🎨 Screenshots
-GAME_START_SCREEN ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
-GAME_DRAW![Gameplay Example](https://github.com/Faizanakacoder/Tic-Tac-Toe-Web-Application-Internship-Project/blob/main/draw.png)
-WIN_DETECTION ![Win Detection](https://github.com/Faizanakacoder/Tic-Tac-Toe-Web-Application-Internship-Project/blob/main/win-screen.png))
+dashboard ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
+homepage ![Gameplay Example](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/HOME%20PAGE.png)
+login failed ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/LOGIN%20FAILED.png)
+succesful login ![Win Detection](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/SUCCESFUL%20LOGIN.png)
 
 
 
