@@ -87,21 +87,9 @@ This project allows users to **sign up, log in, and access protected routes** (D
 ---
 
 ## 🎨 Screenshots
-
-### 🔹 Homepage:
-![Login Screenshot](<img width="1851" height="895" alt="HOME PAGE" src="https://github.com/user-attachments/assets/917bef47-21c4-417f-b721-79fdc02884f8" />)
-
-
-### 🔹 Successful Sign-up:
-![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
-
-
-### 🔹 Successful Log-In:
-![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
-
-
-### 🔹 Dashboard & Log-out:
-![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />)
+GAME_START_SCREEN ![Game Start Screen](https://github.com/Faizanakacoder/secure-user-authentication-internship-prodigy-infotech/blob/main/DASHBOARD%20%26%20LOGOUT.png)
+GAME_DRAW![Gameplay Example](https://github.com/Faizanakacoder/Tic-Tac-Toe-Web-Application-Internship-Project/blob/main/draw.png)
+WIN_DETECTION ![Win Detection](https://github.com/Faizanakacoder/Tic-Tac-Toe-Web-Application-Internship-Project/blob/main/win-screen.png))
 
 
 
