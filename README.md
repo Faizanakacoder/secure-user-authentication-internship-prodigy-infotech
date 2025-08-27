@@ -97,6 +97,11 @@ This project allows users to **sign up, log in, and access protected routes** (D
 
 )
 
+### 🔹 Successful Sign-up
+![Login Screenshot](<img width="1873" height="911" alt="image" src="https://github.com/user-attachments/assets/ddc41195-ce27-4f3b-8a10-7c48413f8aaf" />
+
+)
+
 ### 🔹 Logout Feature
 ![Logout Screenshot](<img width="1856" height="900" alt="image" src="https://github.com/user-attachments/assets/f5764930-5b1d-4d08-88b0-fc3fcfd70228" />
 )
